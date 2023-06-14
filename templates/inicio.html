@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Sesion</title>
+    <link rel="stylesheet" href="{{url_for('static', filename= 'css/estilos.css')}}">
+</head>
+<body>
+        <section>
+            <h1> INICIO SESION COLEGIO SAN MIGUEL</h1>
+
+        <form class="formlogin">
+            <div class="control">
+                <h3>Usuario:</h3>
+                <input type="text" nmae="usuario" value="" placeholder="Usuario">
+            </div>
+            <div class="control">
+                <h3>Contraseña:</h3>
+                <input type="password" name="contraseña" value="" placeholder="Contraseña">
+            </div>
+
+            <button class="boton" type="submit" value="enviar">Ingresar</button>
+
+        </form>
+    </section>
+</body>
+</html>
