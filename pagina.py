@@ -18,13 +18,13 @@ def bienvenido():
 def inicio_sesion():
     return render_template('inicio.html')
 
-@app.route('/verificacion')
-def verificacio():
+@app.route('/verificacion',methods= ['POST','GET'])
+def verificacion():
     if request.method =='POST':
-        email=request.form['email']
+        email=request.form['correo']
         clave=request.form['contraseña']
         clavecifrada=hashlib.md5(bytes(clave,encoding='utf-8'))
-        usuario = Preceptor.query.filtrer_by(email == Preceptor.correo).first()
+        usuario = Preceptor.query.filter_by(correo=email).first()
         
         if usuario and clavecifrada == Preceptor.clave:
             datosform = request.form
@@ -32,7 +32,7 @@ def verificacio():
         else:
             return render_template('inicio.html')
 
-@app.route('/preceptor',methods= ['POST','GET'])
+@app.route('/preceptor')
 def pagina_preceptor():
     if request.method =='POST':
         if request.form['correo'] and request.form['contraseña']:
