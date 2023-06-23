@@ -9,7 +9,7 @@ class Curso(db.Model):
     año = db.Column(db.Integer, nullable=False)
     division = db.Column(db.Integer, nullable=False)
     idpreceptor = db.Column(db.Integer, db.ForeignKey('preceptor.id'))
-    preceptor = db.relationship('Preceptor', backref='cursos')
+    preceptor = db.relationship('Preceptor', backref='curso')
     
 class Estudiante(db.Model):
     __tablename__='estudiante'
@@ -40,3 +40,4 @@ class Preceptor(db.Model):
     apellido=db.Column(db.String(100),nullable=False)
     correo = db.Column(db.String(100),nullable=False)
     clave = db.Column(db.String(100),nullable=False)
+    cursos = db.relationship('Curso', backref='preceptor')
