@@ -1,9 +1,8 @@
 from flask import render_template
 from flask import Flask
 
-
-
 app=Flask('pagina')
+app.config.from_pyfile('config.py')
 
 @app.route('/')
 def saludo():
