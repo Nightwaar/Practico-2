@@ -1,8 +1,8 @@
-from pagina import app
+from __main__ import app
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-db=SQLAlchemy(app)
+db = SQLAlchemy(app)
 
 class Curso(db.Model):
     __tablename__='curso'
