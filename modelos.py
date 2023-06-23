@@ -9,7 +9,7 @@ class Curso(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     año = db.Column(db.Integer,nullable=False)
     division= db.Column(db.Integer,nullable=False)
-    idpreceptor=db.Column(db.Integer,db.ForaignKey('preceptor.id'))
+    idpreceptor=db.Column(db.Integer,db.ForeignKey('Preceptor.id'))
     
 class Estudiante(db.Model):
     __tablename__='estudiante'
@@ -17,22 +17,15 @@ class Estudiante(db.Model):
     nombre= db.Column(db.String(120),nullable=False)
     apellido = db.Column(db.String(120),nullable=False)
     dni = db.Column(db.String(12),nullable=False)
-    idcurso = db.Column(db.Integer,db.ForeignKey('curso.id'))
-class Padre(db.Model):
-    __tablename__='padre'
-    id = db.Column(db.Integer,primary_key=True)
-    nombre= db.Column(db.String(120),nullable=False)
-    apellido = db.Column(db.String(120),nullable=False)
-    correo = db.Column(db.String(100),nullable=False)
-    clave = db.Column(db.String(150),nullable=False)
-    
+    idcurso = db.Column(db.Integer,db.ForeignKey('Curso.id'))
+
 class Asistencia(db.Model):
     __tablename__='asistencia'
     id=db.Column(db.Integer,primary_key=True)
     fecha = db.Column(db.Date,nullable=False)
     codigoclase = db.relationship('codigoclase',backref='Curso')
-    asistio = db.Column(db.boolean,nullable=False)
-    justificacion=db.Column(db.String(100,nullable=True))
+    asistio = db.Column(db.Boolean,nullable=False)
+    justificacion=db.Column(db.String(100),nullable=True)
     idestudiante=db.relationship('idestudiante',backref='Estudiante')
     
     
@@ -43,4 +36,3 @@ class Preceptor(db.Model):
     apellido=db.Column(db.String(100),nullable=False)
     correo = db.Column(db.String(100),nullable=False)
     clave = db.Column(db.String(100),nullable=False)
-    

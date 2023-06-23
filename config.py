@@ -1,3 +1,3 @@
 SECRET_KEY = "GDtfDCFYjD"
-SQLALCHEMY_DATABASE_URI = 'datos.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:////absolute/path/to/datos.db'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
