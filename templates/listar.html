@@ -19,7 +19,7 @@
             <td>Computo total de inasistencias</td>
         </tr>
         {% for alumno in alumnos | sort(attribute='nombre') %}
-        {% if alumno.idcurso == curso.id :%}
+        {% if alumno.idcurso == curso.id %}
             {% set aulaasistencia = 0 %}
             {% set eduasistencia = 0 %}
             {% set aulajustificada = 0 %}
@@ -30,25 +30,24 @@
     
             {% for asis in asistencia %}
                 {% set total = total + 1 %}
-                {% if alumno.id == asis.idestudiante and asis.asistio == 's' and asis.codigoclase == '1' :%}
+                <!-- <tr>
+                    <td>{{ asis.idestudiante }} {{ asis.asistio }} {{ asis.codigoclase }} {{ asis.justificacion }}</td>
+                </tr> -->
+                {% if asis.idestudiante == alumno.id and asis.asistio == 's' and asis.codigoclase == '1' %}
                     {% set aulaasistencia = aulaasistencia + 1 %}
-                {% endif %}
-                {% if alumno.id == asis.idestudiante and asis.asistio == 's' and asis.codigoclase == '2' :%}
+
+                {% elif alumno.id == asis.idestudiante and asis.asistio == 's' and asis.codigoclase == '2' %}
                     {% set eduasistencia = eduasistencia + 1 %}
-                {% endif %}
-                {% if alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '1' and asis.justificacion != '' :%}
+                {% elif alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '1' and asis.justificacion != '' %}
                     {% set aulajustificada = aulajustificada + 1 %}
                     {% set total = total + 1 %}
-                {% endif %}
-                {% if alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '1' and asis.justificacion == '' :%}
+                {% elif alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '1' and asis.justificacion == '' %}
                     {% set aulainjustificada = aulainjustificada + 1 %}
                     {% set total = total + 1 %}
-                {% endif %}
-                {% if alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '2' and asis.justificacion != '' :%}
+                {% elif alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '2' and asis.justificacion != '' %}
                     {% set edujustificada = edujustificada + 1 %}
                     {% set total = total + 0.5 %}
-                {% endif %}
-                {% if alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '2' and asis.justificacion == '' :%}
+                {% elif alumno.id == asis.idestudiante and asis.asistio == 'n' and asis.codigoclase == '2' and asis.justificacion == '' %}
                     {% set eduinjustificada = eduinjustificada + 1 %}
                     {% set total = total + 0.5 %}
                 {% endif %}

@@ -29,7 +29,7 @@ class Asistencia(db.Model):
     asistio = db.Column(db.String(1), nullable=False)
     justificacion = db.Column(db.String(100), nullable=True)
     idestudiante = db.Column(db.Integer, db.ForeignKey('estudiante.id'))
-    estudiante = db.relationship('Estudiante', backref='asistencias')
+    estudiante = db.relationship('Estudiante', backref='asistencias')   
 
 class Preceptor(db.Model):
     __tablename__='preceptor'

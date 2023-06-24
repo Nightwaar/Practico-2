@@ -23,7 +23,7 @@ def verificacion():
     email=request.form['correo']
     clave=request.form['contrasena']
     if not email and not clave:
-        return redirect(url_for("templates",filename='inicio.html'))
+        return render_template('bienvenida.html')
     usuario = Preceptor.query.filter_by(correo=email, clave=clave).first()
     if usuario:
         return redirect(url_for('pagina_preceptor',correo = email))
