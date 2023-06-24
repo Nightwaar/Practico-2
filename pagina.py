@@ -45,11 +45,18 @@ def registrar_asistencia():
 @app.route('/asistencia_curso',methods=['POST','GET'])
 def asistencia_curso():
     idcurso=request.form['cursos']
-    curso=Curso.query.filter_by(id=idcurso)
+    curso=Curso.query.filter_by(id=idcurso).first()
     tipoclase=request.form['clase']
     fecha=request.form['fecha']
-    return render_template('asistencia_curso.html',curso=curso,tipoclase=tipoclase,fecha=fecha)
+    alumnos=Estudiante.query.all()
+    return render_template('asistencia_curso.html',curso=curso,tipoclase=tipoclase,fecha=fecha,alumnos=alumnos)
 
+@app.route('/asistencia_alumno',methods=['POST',['GET']])
+def asistencia_alumno():
+    tipoclase=request.form['clase']
+    fecha=request.form['fecha']
+    idalumno=request.form.get('alumno')
+    return render_template('confirmar_asistencia.html',tipoclase=tipoclase,fecha=fecha,idalumno=idalumno)
 
 @app.route('/listar_asistencia')
 def listar_asistencia():
