@@ -29,15 +29,32 @@ a.resaltar {
     margin: auto;
     text-align: center;
 }
+
+.enlace {
+    color: #030000;
+    background-color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.enlace:hover {
+    background-color: #0056b3;
+}
 /* FIN BIENVENIDA */
 
 
 /* INICIO SESION */
 .titulo {
     font-size: 250%;
-    color:#bbe1fa;
+    color:#000000;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 body {
     font-family: 'Overpass', sans-serif;
@@ -46,14 +63,14 @@ body {
     color: #1b262c;
     
     margin: 0;
-    background-color: #0f4c75;
+    background-color: #82c1ea;
 }
 
 .contenedor {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    margin-top: 20px;
     margin: 0;
     padding: 0;
     min-width: 100vw;
@@ -65,7 +82,7 @@ body {
 .login {
     width: 100%;
     padding: 50px 30px;
-    background-color: #3282b8;
+    background-color: #064c7a;
     
     -webkit-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.15);
     -moz-box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.15);
@@ -100,7 +117,8 @@ body {
     margin-top: 10px;
 }
 .login button:hover {
-    background-color: #0f4c75;
+    color: #000000;
+    background-color: #fbfbfb;
     color:#bbe1fa;
 }
 .central {
@@ -126,3 +144,75 @@ body {
 }
 
 /* FIN INICIO SESION */
+
+
+/* LISTAR CURSOS */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+
+.table th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+
+.table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.table td:first-child {
+  font-weight: bold;
+}
+/* FIN LISTAR CURSOS    */
+
+/* ASISTENCIA */
+.nombre {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 10px;}
+.select-estilo {
+        width: 200px;
+        height: 30px;
+        padding: 5px;
+        font-size: 14px;
+        color: #000000;
+        background-color: #f7f7f7;
+        border: 1px solid #000000;
+        border-radius: 4px;}
+.select-estilo option {
+            padding: 5px;
+            font-size: 14px;
+            color: #000000;
+            background-color: #f7f7f7;
+}
+.input-estilo {
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/* FIN ASISTENCIA  */
+
+/* PRECEPTOR */
+.nombre-preceptor {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}  
+/* PRECEPTOR */

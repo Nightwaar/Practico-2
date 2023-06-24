@@ -24,8 +24,7 @@ class Asistencia(db.Model):
     __tablename__ = 'asistencia'
     id = db.Column(db.Integer, primary_key=True)
     fecha = db.Column(db.String(10), nullable=False)
-    codigoclase = db.Column(db.Integer, db.ForeignKey('curso.id'))
-    curso = db.relationship('Curso', backref='asistencias')
+    codigoclase = db.Column(db.Integer,nullable=False)
     asistio = db.Column(db.String(1), nullable=False)
     justificacion = db.Column(db.String(100), nullable=True)
     idestudiante = db.Column(db.Integer, db.ForeignKey('estudiante.id'))

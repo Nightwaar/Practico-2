@@ -22,19 +22,22 @@ def inicio_sesion():
 def verificacion():
     email=request.form['correo']
     clave=request.form['contrasena']
+    clavecifrada=hashlib.md5(clave.encode()).hexdigest()
     if not email and not clave:
         return render_template('bienvenida.html')
-    usuario = Preceptor.query.filter_by(correo=email, clave=clave).first()
+    usuario = Preceptor.query.filter_by(correo=email, clave=clavecifrada).first()
     if usuario:
+        session["preceptor"] = email
         return redirect(url_for('pagina_preceptor',correo = email))
     else:
         return render_template('inicio.html')
 
 @app.route('/preceptor',methods =['POST','GET'] )
 def pagina_preceptor():
-    correo = request.args.get('correo')
-    session["preceptor"] = correo
-    return render_template('paginapreceptor.html')
+    email = request.form.get('correo')
+    correo_preceptor = session.get("preceptor")
+    usuario = Preceptor.query.filter_by(correo=correo_preceptor).first()
+    return render_template('paginapreceptor.html',correo=correo_preceptor, nombre=usuario.nombre, apellido=usuario.apellido)
 
 @app.route('/registrar_asistencia')
 def registrar_asistencia():
@@ -46,10 +49,12 @@ def registrar_asistencia():
 
 @app.route('/asistencia_curso',methods=['POST','GET'])
 def asistencia_curso():
+    correo_preceptor = session.get("preceptor")
+    preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
     idcurso=request.form.get('cursos')
     curso = Curso.query.filter_by(id=idcurso).first()
     alumnos=Estudiante.query.all()
-    return render_template('asistencia_curso.html', curso=curso, alumnos=alumnos)
+    return render_template('asistencia_curso.html', curso=curso, alumnos=alumnos,preceptor=preceptor)
 
 @app.route('/asistencia_alumno', methods=['GET'])
 def asistencia_alumno():
@@ -58,7 +63,9 @@ def asistencia_alumno():
     fecha = request.args.get('fecha')
     idalumno = request.args.get('alumno')
     alumno = Estudiante.query.filter_by(id=idalumno).first()
-    return render_template('confirmar_asistencia.html', tipoclase=tipoclase, fecha=fecha, alumno=alumno, idcurso=idcurso, idalumno=idalumno)
+    correo_preceptor = session.get("preceptor")
+    preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
+    return render_template('confirmar_asistencia.html', tipoclase=tipoclase, fecha=fecha, alumno=alumno, idcurso=idcurso, idalumno=idalumno,preceptor=preceptor)
 
 
 @app.route('/confirmar_asistencia', methods=['POST'])
@@ -68,7 +75,9 @@ def confirmar_asistencia():
     db.session.add(asistencia)
     db.session.commit()
     cursos=Curso.query.all()
-    return redirect(url_for('registrar_asistencia', cursos=cursos))
+    correo_preceptor = session.get("preceptor")
+    preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
+    return redirect(url_for('registrar_asistencia', cursos=cursos,preceptor=preceptor))
     
 @app.route('/listar_asistencia')
 def listar_asistencia():
@@ -83,7 +92,9 @@ def informe():
     curso = Curso.query.filter_by(id=idcurso).first()
     alumnos = Estudiante.query.all()
     asistencia=Asistencia.query.all()
-    return render_template('listar.html', curso=curso, alumnos=alumnos,asistencia=asistencia)
+    correo_preceptor = session.get("preceptor")
+    preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
+    return render_template('listar.html', curso=curso, alumnos=alumnos,asistencia=asistencia,preceptor=preceptor)
 
 
 if __name__=='__main__':

@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <h1>COLEGIO SAN MIGUEL</h1>
-    <h3>Registrar asistencia</h3>
-    <section>
-        <form action="{{ url_for('asistencia_curso')}}" method="POST">
+    <div class="titulo">
+        <h2>Bienvenido al Programa de asistencia de el Colegio San Miguel</h2>
+        <img class="imagen" src="/static/img/logo_colegio.png" width="800" height="100">
+        <p>Registrar asistencia</p>
+</div>
+<div id="contenedor">
+    <section class="login">
+        <div class="central">
+        <form action="{{ url_for('asistencia_curso')}}" method="POST" id="loginform">
             <div>
                 {% if cursos is not none :%} 
                     <label for="cursos">Cursos</label>
@@ -22,6 +28,11 @@
             </div>
             <button type="submit">Registrar asistencia</button>
         </form>
+    </div>
     </section>
+</div>
+    <div class="centrado">
+        <a class="resaltar" href="{{ url_for ('pagina_preceptor') }}">Volver a pagina preceptor</a> 
+    </div>
 </body>
 </html>
