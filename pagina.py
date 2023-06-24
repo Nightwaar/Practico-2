@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import Flask,request,url_for,redirect
+from flask import Flask,request,url_for,redirect,session
 import hashlib
 from flask_login import LoginManager
 
@@ -30,12 +30,12 @@ def verificacion():
         datosform = request.form
         return render_template('paginapreceptor.html',datos=datosform)
     else:
-        return render_template('datos.html',usuario=usuario)
+        return render_template('inicio.html')
 
 @app.route('/preceptor')
 def pagina_preceptor():
-    preceptores=Preceptor.query.all()
-    return render_template('paginapreceptor.html',preceptores=preceptores)
+    session["preceptor"] = request.form["correo"]
+    return render_template('paginapreceptor.html')
 
 @app.route('/registrar_asistencia')
 def registrar_asistencia():
