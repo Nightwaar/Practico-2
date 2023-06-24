@@ -6,5 +6,11 @@
     <title>Listar inasistencias de un curso</title>
 </head>
 <body>
+    {% if usuarios is not none :%}
+    <label for="usuarios">Preceptores </label><br>
+    <select id="usuarios" name="usuarios" width="500px">
+        {% for usuario in usuarios %} 
+            <option value="{{ preceptor.id}} ">{{ preceptor.nombre }}</option>
+        {% endfor %} 
 </body>
 </html>

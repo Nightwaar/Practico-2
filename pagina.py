@@ -20,37 +20,34 @@ def inicio_sesion():
 
 @app.route('/verificacion',methods= ['POST','GET'])
 def verificacion():
-    if request.method =='POST':
-        email=request.form['correo']
-        clave=request.form['contraseña']
-        clavecifrada=hashlib.md5(bytes(clave,encoding='utf-8'))
-        usuario = Preceptor.query.filter_by(correo=email).first()
-        
-        if usuario and clavecifrada == Preceptor.clave:
-            datosform = request.form
-            return render_template('paginapreceptor.html',datos=datosform)
-        else:
-            return render_template('inicio.html')
+    email=request.form['correo']
+    clave=request.form['contrasena']
+    if not email and not clave:
+        return redirect(url_for("templates",filename='inicio.html'))
+    # clavecifrada=hashlib.md5(bytes(clave,encoding='utf-8')).digest()
+    usuario = Preceptor.query.filter_by(correo=email, clave=clave).first()
+    if usuario:
+        datosform = request.form
+        return render_template('paginapreceptor.html',datos=datosform)
+    else:
+        return render_template('datos.html',usuario=usuario)
 
 @app.route('/preceptor')
 def pagina_preceptor():
-    if request.method =='POST':
-        if request.form['correo'] and request.form['contraseña']:
-            datosform = request.form
-            return render_template('paginapreceptor.html',datos=datosform)
-        else:
-            return render_template('inicio.html')
+    preceptores=Preceptor.query.all()
+    return render_template('paginapreceptor.html',preceptores=preceptores)
 
 @app.route('/registrar_asistencia')
-def asistencia():
+def registrar_asistencia():
     return render_template('funcionalidad2.html')
 
 
 
 @app.route('/listar_asistencia')
-def listar():
+def listar_asistencia():
     return render_template('funcionalidad3.html')
 
 
 if __name__=='__main__':
+    
     app.run(debug=True)
