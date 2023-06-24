@@ -8,18 +8,13 @@
 <body>
     <h1>COLEGIO SAN MIGUEL</h1>
     <h1>ASISTENCIA PARA EL CURSO: {{ curso.anio }} {{ curso.division }}</h1>
-    {% if tipoclase==1 :%} 
-        <h3>Tipo de clase: Aula</h3>
-    {% else %}
-        <h3>Tipo de clase: Educacion Fisica</h3>
-    <h3>Fecha: {{ fecha }}</h3>
-
-    {% if alumnos is not None :%} 
-        {% for alumno in alumnos %} 
-            {% if alumno.idcurso == curso.id %}
-                {{ alumno = Estudiante.query.filter_by(alumno.id).first()}}
-                <a href="{{ url_for('asistencia_alumno')+f'?alumno={alumno.id}' }}" >{{ alumno.nombre }} {{ alumno.apellido }}</a>
+    {% if alumnos is not none :%}
+        {% for alumno in alumnos | sort(attribute='nombre') %}
+            {% if alumno.idcurso == curso.id :%}
+                <a href="{{ url_for('asistencia_alumno', alumno=alumno.id) }}">{{ alumno.nombre }} {{ alumno.apellido }}</a>
+                <br>
             {% endif %}
+        {% endfor %}
     {% endif %}
 
 </body>

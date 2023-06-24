@@ -23,10 +23,10 @@ class Estudiante(db.Model):
 class Asistencia(db.Model):
     __tablename__ = 'asistencia'
     id = db.Column(db.Integer, primary_key=True)
-    fecha = db.Column(db.Date, nullable=False)
+    fecha = db.Column(db.String(10), nullable=False)
     codigoclase = db.Column(db.Integer, db.ForeignKey('curso.id'))
     curso = db.relationship('Curso', backref='asistencias')
-    asistio = db.Column(db.Boolean, nullable=False)
+    asistio = db.Column(db.String(1), nullable=False)
     justificacion = db.Column(db.String(100), nullable=True)
     idestudiante = db.Column(db.Integer, db.ForeignKey('estudiante.id'))
     estudiante = db.relationship('Estudiante', backref='asistencias')
