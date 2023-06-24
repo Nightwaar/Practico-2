@@ -7,7 +7,7 @@ db = SQLAlchemy(app)
 class Curso(db.Model):
     __tablename__ = 'curso'
     id = db.Column(db.Integer, primary_key=True)
-    año = db.Column(db.Integer, nullable=False)
+    anio = db.Column(db.Integer, nullable=False)
     division = db.Column(db.Integer, nullable=False)
     idpreceptor = db.Column(db.Integer, db.ForeignKey('preceptor.id'))
     cursos_preceptor = db.relationship('Preceptor', backref='curso')

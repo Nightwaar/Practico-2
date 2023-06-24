@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>COLEGIO SAN MIGUEL</h1>
+    <h3>Registrar asistencia</h3>
+    <section>
+        <form action="{{ url_for('asistencia_curso')}}" method="POST">
+            <div>
+                <h3>Numero de cursos</h3>
+                {% if cursos is not none :%} 
+                    <label for="cursos">Cursos</label>
+                    <select id="cursos" name="cursos" width="500px">
+                        {% for curso in cursos %} 
+                            <option value="{{ curso.id}}">{{ curso.anio }} {{ curso.division }}</option>
+                        {% endfor %} 
+                    </select>
+                {% endif %}
+            </div>
+            <div>
+                <h3>Ingrese la clase</h3>
+                <select name="clase">
+                    <option value="1">Clase de aula</option>
+                    <option value="2">Clase de Educacion Fisica</option>
+                </select>
+            </div>
+            <div>
+                <h3>Ingrese la fecha</h3>
+                <input type="date" id="start" name="fecha"
+                value="2023-06-24"
+                min="2023-01-01" max="2023-12-31">
+            </div>
+            <button type="submit">Registrar asistencia</button>
+        </form>
+    </section>
+</body>
+</html>

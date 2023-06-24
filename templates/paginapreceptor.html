@@ -10,15 +10,16 @@
     <h1>COLEGIO SAN MIGUEL</h1>
     </header>
     <section>
+        <h1>Bienvenido, Preceptor</h1>
+        <p>Correo electrónico: {{ session['preceptor'] }}</p>
+    </section>
+    <section>
         <nav>
                 <ul>
                     <li><a href="{{ url_for ('registrar_asistencia') }}">Registrar asistencia</a></li>
                     <li><a href="{{ url_for ('listar_asistencia') }}">Obtener informe de inasistenciasde un curso</a></li>
                 </ul>
         </nav>
-    </section>
-    <section>
-        <p>Ha iniciado sesion con el correo: {{ session.preceptor }} </p>
     </section>
     <br>
     <br>

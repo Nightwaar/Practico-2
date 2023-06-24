@@ -24,23 +24,31 @@ def verificacion():
     clave=request.form['contrasena']
     if not email and not clave:
         return redirect(url_for("templates",filename='inicio.html'))
-    # clavecifrada=hashlib.md5(bytes(clave,encoding='utf-8')).digest()
     usuario = Preceptor.query.filter_by(correo=email, clave=clave).first()
     if usuario:
-        datosform = request.form
-        return render_template('paginapreceptor.html',datos=datosform)
+        return redirect(url_for('pagina_preceptor',correo = email))
     else:
         return render_template('inicio.html')
 
-@app.route('/preceptor')
+@app.route('/preceptor',methods =['POST','GET'] )
 def pagina_preceptor():
-    session["preceptor"] = request.form["correo"]
+    correo = request.args.get('correo')
+    session["preceptor"] = correo
     return render_template('paginapreceptor.html')
 
 @app.route('/registrar_asistencia')
 def registrar_asistencia():
-    return render_template('funcionalidad2.html')
+    cursos=Curso.query.all()
+    return render_template('cursoclase.html',cursos=cursos)
 
+
+@app.route('/asistencia_curso',methods=['POST','GET'])
+def asistencia_curso():
+    idcurso=request.form['cursos']
+    curso=Curso.query.filter_by(id=idcurso)
+    tipoclase=request.form['clase']
+    fecha=request.form['fecha']
+    return render_template('asistencia_curso.html',curso=curso,tipoclase=tipoclase,fecha=fecha)
 
 
 @app.route('/listar_asistencia')
