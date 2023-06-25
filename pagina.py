@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import Flask,request,url_for,redirect,session
+from flask import Flask,request,url_for,redirect,session,flash
 import hashlib
 
 
@@ -30,6 +30,7 @@ def verificacion():
         session["preceptor"] = email
         return redirect(url_for('pagina_preceptor',correo = email))
     else:
+        flash('Correo o contraseña incorrectos', 'error')
         return render_template('inicio.html')
 
 @app.route('/preceptor',methods =['POST','GET'] )
@@ -49,6 +50,7 @@ def registrar_asistencia():
 
 @app.route('/asistencia_curso',methods=['POST','GET'])
 def asistencia_curso():
+    idpreceptor=request.args.get('idpreceptor')
     correo_preceptor = session.get("preceptor")
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
     idcurso=request.form.get('cursos')
@@ -65,7 +67,8 @@ def asistencia_alumno():
     alumno = Estudiante.query.filter_by(id=idalumno).first()
     correo_preceptor = session.get("preceptor")
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
-    return render_template('confirmar_asistencia.html', tipoclase=tipoclase, fecha=fecha, alumno=alumno, idcurso=idcurso, idalumno=idalumno,preceptor=preceptor)
+    idpreceptor = preceptor.id
+    return render_template('confirmar_asistencia.html', tipoclase=tipoclase, fecha=fecha, alumno=alumno, idcurso=idcurso, idalumno=idalumno,preceptor=idpreceptor)
 
 
 @app.route('/confirmar_asistencia', methods=['POST'])
