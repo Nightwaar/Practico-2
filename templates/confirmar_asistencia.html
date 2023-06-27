@@ -19,18 +19,8 @@
                         <p class="nombre">{{ alumno.nombre }} {{ alumno.apellido }}</p>
                     </div>
                     <div>
-                        <select name="tipoclase" class="select-estilo">
-                            <option value="1" name="Claseaula">Clase Aula</option>
-                            <option value="2" name="Claseedu">Clase educacion Fisica</option>
-                        </select>
-                    </div>
-                    <br><br>
-                    <div>
-                        <input type="date" id="start" name="fecha"
-                        value="2013-06-24"
-                        min="2023-01-01" max="2023-12-31" class="input-estilo">
-
-                    </div>
+                        <input type="hidden" name="fecha" value="{{ fecha }}">
+                        <input type="hidden" name="codigoclase" value="{{ codigoclase }}">
                     <br><br>
                     <div>
                         <input type="text" name="asis" placeholder="Asistencia" class="input-estilo">

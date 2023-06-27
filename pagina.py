@@ -1,5 +1,6 @@
 from flask import render_template
 from flask import Flask,request,url_for,redirect,session,flash
+from datetime import *
 import hashlib
 
 
@@ -40,6 +41,49 @@ def pagina_preceptor():
     usuario = Preceptor.query.filter_by(correo=correo_preceptor).first()
     return render_template('paginapreceptor.html',correo=correo_preceptor, nombre=usuario.nombre, apellido=usuario.apellido)
 
+# @app.route('/registrar_asistencia')
+# def registrar_asistencia():
+#     correo_preceptor = session.get("preceptor")
+#     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
+#     cursos = Curso.query.filter_by(idpreceptor=preceptor.id).all()
+#     return render_template('cursoclase.html', cursos=cursos, preceptor=preceptor)
+
+
+# @app.route('/asistencia_curso',methods=['POST','GET'])
+# def asistencia_curso():
+#     idpreceptor=request.args.get('idpreceptor')
+#     correo_preceptor = session.get("preceptor")
+#     fecha = request.args.get('fecha')
+#     codigoclase = request.args.get('tipoclase') 
+#     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
+#     idcurso=request.form.get('cursos')
+#     curso = Curso.query.filter_by(id=idcurso).first()
+#     alumnos=Estudiante.query.all()
+#     return render_template('asistencia_curso.html', curso=curso,fecha=fecha,codigoclase=codigoclase, alumnos=alumnos,preceptor=preceptor)
+
+# @app.route('/asistencia_alumno', methods=['GET'])
+# def asistencia_alumno():
+#     fecha = request.args.get('fecha')
+#     codigoclase = request.args.get('tipoclase') 
+#     idcurso = request.args.get('idcurso')
+#     idalumno = request.args.get('alumno')
+#     alumno = Estudiante.query.filter_by(id=idalumno).first()
+#     correo_preceptor = session.get("preceptor")
+#     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
+#     idpreceptor = preceptor.id
+#     return render_template('confirmar_asistencia.html', fecha=fecha, codigoclase=codigoclase, alumno=alumno, idcurso=idcurso, idalumno=idalumno, preceptor=idpreceptor)
+
+
+# @app.route('/confirmar_asistencia', methods=['POST'])
+# def confirmar_asistencia():
+#     idcurso = request.form.get('idcurso')
+#     asistencia = Asistencia(fecha=request.form.get('fecha'), codigoclase=request.form.get('codigoclase'), asistio=request.form['asis'], justificacion=request.form['justificacion'], idestudiante=request.form.get('idalumno'))
+#     db.session.add(asistencia)
+#     db.session.commit()
+#     cursos = Curso.query.all()
+#     correo_preceptor = session.get("preceptor")
+#     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
+#     return redirect(url_for('registrar_asistencia', cursos=cursos, preceptor=preceptor, fecha=request.form.get('fecha'), codigoclase=request.form.get('codigoclase')))
 @app.route('/registrar_asistencia')
 def registrar_asistencia():
     correo_preceptor = session.get("preceptor")
@@ -50,37 +94,49 @@ def registrar_asistencia():
 
 @app.route('/asistencia_curso',methods=['POST','GET'])
 def asistencia_curso():
-    idpreceptor=request.args.get('idpreceptor')
+    idpreceptor = request.args.get('idpreceptor')
     correo_preceptor = session.get("preceptor")
+    fecha = request.form['fecha']
+    codigoclase = request.form['tipoclase']
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
-    idcurso=request.form.get('cursos')
+    idcurso = request.form.get('cursos')
     curso = Curso.query.filter_by(id=idcurso).first()
-    alumnos=Estudiante.query.all()
-    return render_template('asistencia_curso.html', curso=curso, alumnos=alumnos,preceptor=preceptor)
+    alumnos = Estudiante.query.all()
+    return render_template('asistencia_curso.html', curso=curso, fecha=fecha, codigoclase=codigoclase, alumnos=alumnos, preceptor=preceptor)
 
-@app.route('/asistencia_alumno', methods=['GET'])
+
+@app.route('/asistencia_alumno', methods=['GET','POST'])
 def asistencia_alumno():
-    idcurso = request.args.get('idcurso')
-    tipoclase = request.args.get('clase')
     fecha = request.args.get('fecha')
+    codigoclase = request.args.get('codigoclase')
+    idcurso = request.args.get('idcurso')
     idalumno = request.args.get('alumno')
     alumno = Estudiante.query.filter_by(id=idalumno).first()
     correo_preceptor = session.get("preceptor")
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
     idpreceptor = preceptor.id
-    return render_template('confirmar_asistencia.html', tipoclase=tipoclase, fecha=fecha, alumno=alumno, idcurso=idcurso, idalumno=idalumno,preceptor=idpreceptor)
+    return render_template('confirmar_asistencia.html', fecha=fecha, codigoclase=codigoclase, alumno=alumno, idcurso=idcurso, idalumno=idalumno, preceptor=idpreceptor)
+
 
 
 @app.route('/confirmar_asistencia', methods=['POST'])
 def confirmar_asistencia():
-    idcurso = request.args.get('idcurso')
-    asistencia = Asistencia(fecha=request.form['fecha'], codigoclase=request.form['tipoclase'], asistio=request.form['asis'], justificacion=request.form['justificacion'], idestudiante=request.form.get('idalumno'))
+    fecha=request.form.get('fecha')
+    ano,mes,dia=map(int,fecha.split('-'))
+    fecha=date(ano,mes,dia)
+    codigoclase=request.form.get('codigoclase')
+    idcurso = request.form.get('idcurso')
+    asistencia = Asistencia(fecha=fecha, codigoclase=codigoclase, asistio=request.form['asis'], justificacion=request.form['justificacion'], idestudiante=request.form.get('idalumno'))
+    print(fecha)
+    print(codigoclase)
     db.session.add(asistencia)
     db.session.commit()
-    cursos=Curso.query.all()
+    cursos = Curso.query.all()
     correo_preceptor = session.get("preceptor")
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
-    return redirect(url_for('registrar_asistencia', cursos=cursos,preceptor=preceptor))
+    return redirect(url_for('registrar_asistencia', cursos=cursos, preceptor=preceptor, fecha=request.form.get('fecha'), codigoclase=request.form.get('codigoclase')))
+
+
     
 @app.route('/listar_asistencia')
 def listar_asistencia():
@@ -101,5 +157,4 @@ def informe():
 
 
 if __name__=='__main__':
-    
     app.run(debug=True)

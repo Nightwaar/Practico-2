@@ -1,9 +1,9 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Asistencia</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
             {% if alumnos is not none :%}
                 {% for alumno in alumnos | sort(attribute='nombre') %}
                     {% if alumno.idcurso == curso.id :%}
-                        <a href="{{ url_for('asistencia_alumno', alumno=alumno.id) }}" class="enlace">{{ alumno.nombre }} {{ alumno.apellido }}</a>
+                        <a href="{{ url_for('asistencia_alumno', alumno=alumno.id,fecha=fecha,codigoclase=codigoclase) }}" class="enlace">{{ alumno.nombre }} {{ alumno.apellido }}</a>
                         <br><br>
                     {% endif %}
                 {% endfor %}

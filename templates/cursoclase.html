@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Elegir curso</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -25,6 +25,19 @@
                         {% endfor %} 
                     </select>
                 {% endif %}
+            </div>
+            <div>
+                <select name="tipoclase" class="select-estilo">
+                    <option value="1" name="Claseaula">Clase Aula</option>
+                    <option value="2" name="Claseedu">Clase educacion Fisica</option>
+                </select>
+            </div>
+            <br><br>
+            <div>
+                <input type="date" id="start" name="fecha"
+                value="2013-06-24"
+                min="2023-01-01" max="2023-12-31" class="input-estilo">
+
             </div>
             <button type="submit">Registrar asistencia</button>
         </form>
