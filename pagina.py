@@ -54,10 +54,10 @@ def registrar_asistencia():
 def asistencia_curso():
     idpreceptor = request.args.get('idpreceptor')
     correo_preceptor = session.get("preceptor")
-    fecha = request.form.get('fecha')
-    codigoclase = request.form.get('tipoclase')
+    fecha = request.form.get('fecha') or request.args.get('fecha')
+    codigoclase = request.form.get('tipoclase') or request.args.get('fecha')
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
-    idcurso = request.args.get('idcurso')
+    idcurso = request.form.get('idcurso') or request.args.get('idcurso')
     curso = Curso.query.filter_by(id=idcurso).first()
     alumnos = Estudiante.query.all()
     return render_template('asistencia_curso.html', curso=curso, fecha=fecha, codigoclase=codigoclase, alumnos=alumnos, preceptor=preceptor,idcurso=idcurso)
