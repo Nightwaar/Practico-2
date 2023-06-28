@@ -17,7 +17,7 @@
             {% if alumnos is not none :%}
                 {% for alumno in alumnos | sort(attribute='nombre') %}
                     {% if alumno.idcurso == curso.id :%}
-                        <a href="{{ url_for('asistencia_alumno', alumno=alumno.id,fecha=fecha,codigoclase=codigoclase) }}" class="enlace">{{ alumno.nombre }} {{ alumno.apellido }}</a>
+                        <a href="{{ url_for('asistencia_alumno', alumno=alumno.id,fecha=fecha,codigoclase=codigoclase,idcurso=idcurso) }}" class="enlace">{{ alumno.nombre }} {{ alumno.apellido }}</a>
                         <br><br>
                     {% endif %}
                 {% endfor %}

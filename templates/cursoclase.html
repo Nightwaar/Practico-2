@@ -19,7 +19,7 @@
             <div>
                 {% if cursos is not none :%} 
                     <label for="cursos">Cursos</label>
-                    <select id="cursos" name="cursos" width="500px">
+                    <select id="cursos" name="idcurso" width="500px">
                         {% for curso in cursos %} 
                                 <option value="{{ curso.id}}">{{ curso.anio }} {{ curso.division }}</option>
                         {% endfor %} 

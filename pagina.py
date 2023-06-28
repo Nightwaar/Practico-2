@@ -54,13 +54,13 @@ def registrar_asistencia():
 def asistencia_curso():
     idpreceptor = request.args.get('idpreceptor')
     correo_preceptor = session.get("preceptor")
-    fecha = request.form['fecha']
-    codigoclase = request.form['tipoclase']
+    fecha = request.form.get('fecha')
+    codigoclase = request.form.get('tipoclase')
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
-    idcurso = request.form.get('cursos')
+    idcurso = request.args.get('idcurso')
     curso = Curso.query.filter_by(id=idcurso).first()
     alumnos = Estudiante.query.all()
-    return render_template('asistencia_curso.html', curso=curso, fecha=fecha, codigoclase=codigoclase, alumnos=alumnos, preceptor=preceptor)
+    return render_template('asistencia_curso.html', curso=curso, fecha=fecha, codigoclase=codigoclase, alumnos=alumnos, preceptor=preceptor,idcurso=idcurso)
 
 
 @app.route('/asistencia_alumno', methods=['GET','POST'])
@@ -85,14 +85,12 @@ def confirmar_asistencia():
     codigoclase=request.form.get('codigoclase')
     idcurso = request.form.get('idcurso')
     asistencia = Asistencia(fecha=fecha, codigoclase=codigoclase, asistio=request.form['asis'], justificacion=request.form['justificacion'], idestudiante=request.form.get('idalumno'))
-    print(fecha)
-    print(codigoclase)
     db.session.add(asistencia)
     db.session.commit()
     cursos = Curso.query.all()
     correo_preceptor = session.get("preceptor")
     preceptor = Preceptor.query.filter_by(correo=correo_preceptor).first()
-    return redirect(url_for('registrar_asistencia', cursos=cursos, preceptor=preceptor, fecha=request.form.get('fecha'), codigoclase=request.form.get('codigoclase')))
+    return redirect(url_for('asistencia_curso', cursos=cursos, preceptor=preceptor, fecha=request.form.get('fecha'), codigoclase=request.form.get('codigoclase'),idcurso=idcurso))
 
 
     
